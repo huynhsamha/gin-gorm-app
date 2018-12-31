@@ -3,9 +3,10 @@ package main
 import (
 	"html/template"
 	"log"
-	"net/http"
 	"os"
 	"time"
+
+	"github.com/huynhsamha/gin-go-app/routes"
 
 	gintemplate "github.com/foolin/gin-template"
 	"github.com/gin-gonic/gin"
@@ -51,22 +52,7 @@ func configApp() {
 	/**
 	 * View routes
 	 */
-	app.GET("/", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "index", gin.H{
-			"title":   "Home Page",
-			"appname": "Gin App",
-			"message": "Hello Gin Go Web Framework",
-		})
-	})
-
-	app.GET("/profile", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "profile", gin.H{
-			"title":    "Profile Page",
-			"appname":  "Gin App",
-			"message":  "Hello Gin Go Web Framework",
-			"username": "Alice",
-		})
-	})
+	routes.SetUp(app)
 }
 
 func main() {
