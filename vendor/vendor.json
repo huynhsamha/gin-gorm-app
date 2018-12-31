@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "FJtuuv04YEH/m0YzCAigEK1+wUM=",
+			"path": "github.com/foolin/gin-template",
+			"revision": "089e62d1d723b168b89e8dbb0e823228b7366358",
+			"revisionTime": "2018-05-15T08:30:52Z"
+		},
+		{
 			"checksumSHA1": "QeKwBtN2df+j+4stw3bQJ6yO4EY=",
 			"path": "github.com/gin-contrib/sse",
 			"revision": "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae",

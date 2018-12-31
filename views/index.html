@@ -1,0 +1,9 @@
+{{ define "content" }}
+
+<h1>Hello {{ .appname }}</h1>
+
+<h3>{{ .message }}</h3>
+
+{{ template "index_login" . }}
+
+{{ end }}
