@@ -1,7 +1,7 @@
 package api
 
 import (
-	Controllers "github.com/huynhsamha/gin-go-app/controllers"
+	Controllers "github.com/huynhsamha/gin-gorm-app/controllers"
 
 	"github.com/gin-gonic/gin"
 )

@@ -53,6 +53,12 @@
 			"revisionTime": "2018-11-28T19:23:52Z"
 		},
 		{
+			"checksumSHA1": "GWZt8djqK/GoHgon8POT508+BXM=",
+			"path": "github.com/jinzhu/gorm",
+			"revision": "5ad6f621e6f59672f5b5061df85b243436fde048",
+			"revisionTime": "2018-12-13T13:04:51Z"
+		},
+		{
 			"checksumSHA1": "I+g5iffd0bNDiI8swxzsHiJxBz0=",
 			"path": "github.com/joho/godotenv",
 			"revision": "69ed1d913aa885da390dd6de9febf063d101b097",
@@ -107,5 +113,5 @@
 			"revisionTime": "2018-11-15T11:05:04Z"
 		}
 	],
-	"rootPath": "github.com/huynhsamha/gin-go-app"
+	"rootPath": "github.com/huynhsamha/gin-gorm-app"
 }

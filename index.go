@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
-	APIs "github.com/huynhsamha/gin-go-app/api"
-	Routes "github.com/huynhsamha/gin-go-app/routes"
+	APIs "github.com/huynhsamha/gin-gorm-app/api"
+	Routes "github.com/huynhsamha/gin-gorm-app/routes"
 
 	gintemplate "github.com/foolin/gin-template"
 	"github.com/gin-gonic/gin"
@@ -65,6 +65,8 @@ func configApp() {
 func main() {
 
 	loadEnv()
+
+	connectDatabase()
 
 	configApp()
 
