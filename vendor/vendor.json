@@ -1,6 +1,6 @@
 {
 	"comment": "",
-	"ignore": "test",
+	"ignore": "",
 	"package": [
 		{
 			"checksumSHA1": "FJtuuv04YEH/m0YzCAigEK1+wUM=",
@@ -53,7 +53,7 @@
 			"revisionTime": "2018-11-28T19:23:52Z"
 		},
 		{
-			"checksumSHA1": "GWZt8djqK/GoHgon8POT508+BXM=",
+			"checksumSHA1": "/1JF2Sfa6QTHKESc3YLN3E/Hiv4=",
 			"path": "github.com/jinzhu/gorm",
 			"revision": "5ad6f621e6f59672f5b5061df85b243436fde048",
 			"revisionTime": "2018-12-13T13:04:51Z"
@@ -69,6 +69,12 @@
 			"path": "github.com/json-iterator/go",
 			"revision": "d05f387f50c0c406889b62cb5ec51c76a64d89ee",
 			"revisionTime": "2018-11-12T06:45:56Z"
+		},
+		{
+			"checksumSHA1": "AU3fA8Sm33Vj9PBoRPSeYfxLRuE=",
+			"path": "github.com/lib/pq/oid",
+			"revision": "9eb73efc1fcc404148b56765b0d3f61d9a5ef8ee",
+			"revisionTime": "2018-10-16T16:26:27Z"
 		},
 		{
 			"checksumSHA1": "GiVgQkx5acnq+JZtYiuHPlhHoso=",

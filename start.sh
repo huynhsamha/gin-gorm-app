@@ -1,1 +1,1 @@
-go run index.go
+go run app.go

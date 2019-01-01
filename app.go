@@ -2,25 +2,16 @@ package main
 
 import (
 	"html/template"
-	"log"
-	"os"
 	"time"
 
 	APIs "github.com/huynhsamha/gin-gorm-app/api"
+	"github.com/huynhsamha/gin-gorm-app/config"
 	Routes "github.com/huynhsamha/gin-gorm-app/routes"
+	"github.com/huynhsamha/gin-gorm-app/utils"
 
 	gintemplate "github.com/foolin/gin-template"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
-
-// Load environment variables in file .env
-func loadEnv() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-}
 
 var app = gin.Default()
 
@@ -64,15 +55,10 @@ func configApp() {
 
 func main() {
 
-	loadEnv()
-
-	connectDatabase()
+	config.LoadEnv()
+	config.ConnectDatabase()
 
 	configApp()
 
-	port := os.Getenv("port")
-	if port == "" {
-		port = "3000"
-	}
-	app.Run(":" + port)
+	app.Run(":" + utils.DefaultGetEnv("PORT", "3000"))
 }
