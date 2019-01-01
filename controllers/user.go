@@ -7,21 +7,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// UserCtrlType : Type controller for User
-type UserCtrlType struct {
-	FindAll           gin.HandlerFunc
-	FindOneByID       gin.HandlerFunc
-	FindOneByUsername gin.HandlerFunc
-}
-
 // UserCtrl : Controller for User
-var UserCtrl = UserCtrlType{
-	findAll,
-	findOneByID,
-	findOneByUsername,
-}
+type UserCtrl struct{}
 
-func findAll(ctx *gin.Context) {
+// FindAll :
+func (ctrl UserCtrl) FindAll(ctx *gin.Context) {
 	email := ctx.DefaultQuery("email", "")
 	page := ctx.DefaultQuery("page", "1")
 	keywords := ctx.DefaultQuery("keywords", "")
@@ -36,7 +26,8 @@ func findAll(ctx *gin.Context) {
 	})
 }
 
-func findOneByID(ctx *gin.Context) {
+// FindOneByID :
+func (ctrl UserCtrl) FindOneByID(ctx *gin.Context) {
 	id := ctx.Param("id")
 	ctx.JSON(http.StatusOK, gin.H{
 		"id":      id,
@@ -44,7 +35,8 @@ func findOneByID(ctx *gin.Context) {
 	})
 }
 
-func findOneByUsername(ctx *gin.Context) {
+// FindOneByUsername :
+func (ctrl UserCtrl) FindOneByUsername(ctx *gin.Context) {
 	username := ctx.Param("username")
 	ctx.JSON(http.StatusOK, gin.H{
 		"username": username,

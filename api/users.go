@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var userCtrl = Controllers.UserCtrl
+var userCtrl = Controllers.UserCtrl{}
 
 func setUpUserRoutes(router *gin.RouterGroup) {
 	router.GET("/", userCtrl.FindAll)
