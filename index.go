@@ -6,7 +6,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/huynhsamha/gin-go-app/routes"
+	APIs "github.com/huynhsamha/gin-go-app/api"
+	Routes "github.com/huynhsamha/gin-go-app/routes"
 
 	gintemplate "github.com/foolin/gin-template"
 	"github.com/gin-gonic/gin"
@@ -52,7 +53,13 @@ func configApp() {
 	/**
 	 * View routes
 	 */
-	routes.SetUp(app)
+	Routes.SetUp(app)
+
+	/**
+	 * API routes
+	 */
+	api := app.Group("/api")
+	APIs.SetUp(api)
 }
 
 func main() {

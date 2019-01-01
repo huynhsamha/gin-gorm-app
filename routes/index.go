@@ -7,8 +7,8 @@ import (
 )
 
 // SetUp : Set up routes to render view HTML
-func SetUp(app *gin.Engine) {
-	app.GET("/", func(ctx *gin.Context) {
+func SetUp(router *gin.Engine) {
+	router.GET("/", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "index", gin.H{
 			"title":   "Home Page",
 			"appname": "Gin App",
@@ -16,7 +16,7 @@ func SetUp(app *gin.Engine) {
 		})
 	})
 
-	app.GET("/profile", func(ctx *gin.Context) {
+	router.GET("/profile", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "profile", gin.H{
 			"title":    "Profile Page",
 			"appname":  "Gin App",
