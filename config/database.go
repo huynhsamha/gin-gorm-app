@@ -3,6 +3,8 @@ package config
 import (
 	"fmt"
 
+	"github.com/huynhsamha/gin-gorm-app/controllers"
+	"github.com/huynhsamha/gin-gorm-app/models"
 	"github.com/huynhsamha/gin-gorm-app/utils"
 	"github.com/jinzhu/gorm"
 
@@ -31,6 +33,19 @@ func ConnectDatabase() {
 	} else {
 		fmt.Println("Connect database PostgreSQL successfully")
 	}
-	defer db.Close()
 
+	// Pass db connection to package controllers and models
+	models.SetUpDBConnection(db)
+	controllers.SetUpDBConnection(db)
+
+	autoMigrationDB(db)
+}
+
+// Automatically migrate your schema, to keep your schema update to date.
+// Document at http://gorm.io/docs/migration.html
+func autoMigrationDB(db *gorm.DB) {
+	db.AutoMigrate(
+		&models.User{},
+		&models.Profile{},
+	)
 }
