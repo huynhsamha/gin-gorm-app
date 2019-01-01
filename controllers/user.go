@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -21,8 +22,17 @@ var UserCtrl = UserCtrlType{
 }
 
 func findAll(ctx *gin.Context) {
+	email := ctx.DefaultQuery("email", "")
+	page := ctx.DefaultQuery("page", "1")
+	keywords := ctx.DefaultQuery("keywords", "")
+
+	log.Println(email, page, keywords)
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"message": "Received",
+		"message":  "Received",
+		"email":    email,
+		"page":     page,
+		"keywords": keywords,
 	})
 }
 
