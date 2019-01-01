@@ -6,7 +6,7 @@ import (
 	"github.com/huynhsamha/gin-gorm-app/utils"
 	"github.com/jinzhu/gorm"
 
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	_ "github.com/jinzhu/gorm/dialects/postgres" // driver for connection postgres
 )
 
 // ConnectDatabase : connect to database PostgreSQL using gorm
