@@ -4,9 +4,13 @@ import (
 	"net/http"
 
 	"github.com/huynhsamha/gin-gorm-app/models"
+	"github.com/huynhsamha/gin-gorm-app/utils"
 
 	"github.com/gin-gonic/gin"
 )
+
+var random = utils.Random{}
+var crypto = utils.Crypto{}
 
 // AuthCtrl : Controller for Authentication routes
 type AuthCtrl struct{}
@@ -29,9 +33,17 @@ func (ctrl AuthCtrl) SignUp(ctx *gin.Context) {
 		Username: form.Username,
 		Email:    form.Email,
 		Password: form.Password,
+		Salt:     random.Hex(32),
+	}
+	user.Password = crypto.SHA256(user.Password + user.Salt)
+
+	if err := db.Create(&user).Error; err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
-	db.Create(&user)
-
-	ctx.JSON(http.StatusOK, user)
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "Sign up successfully",
+		"user":    user,
+	})
 }

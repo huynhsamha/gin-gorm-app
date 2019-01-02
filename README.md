@@ -15,8 +15,13 @@ Implement *Server Side Render (SSR)* and *REST APIs* using **gin** *HTTP Web Fra
 
 ### Gorm
 
+### Dependencies
 
+#### godotenv
 
+#### gin-template
+
+#### jwt-go
 
 ## Quickstart
 
