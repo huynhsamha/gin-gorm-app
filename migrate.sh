@@ -1,0 +1,1 @@
+go run scripts/migrateDB.go

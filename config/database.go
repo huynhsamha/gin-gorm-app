@@ -11,6 +11,8 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres" // driver for connection postgres
 )
 
+var db *gorm.DB
+
 // ConnectDatabase : connect to database PostgreSQL using gorm
 // gorm : GO - ORM
 func ConnectDatabase() {
@@ -38,14 +40,26 @@ func ConnectDatabase() {
 	models.SetUpDBConnection(db)
 	controllers.SetUpDBConnection(db)
 
-	autoMigrationDB(db)
+	// Store this db connection for package config
+	setUpDBConnection(db)
 }
 
-// Automatically migrate your schema, to keep your schema update to date.
+func setUpDBConnection(DB *gorm.DB) {
+	db = DB
+}
+
+// Get tables list from Models declaration
+var tables = models.DBTables
+
+// AutoMigrationDB : migrate your schema, to keep your schema update to date.
 // Document at http://gorm.io/docs/migration.html
-func autoMigrationDB(db *gorm.DB) {
-	db.AutoMigrate(
-		&models.User{},
-		&models.Profile{},
-	)
+// Only used in scripts/migrateDB.go
+func AutoMigrationDB() {
+	// Drop tables
+	db.DropTableIfExists(tables...)
+	// Migration
+	db.AutoMigrate(tables...)
+
+	// Add Foreign Keys
+	db.Model(&models.Profile{}).AddForeignKey("user_id", "users(id)", "SET NULL", "SET NULL")
 }
