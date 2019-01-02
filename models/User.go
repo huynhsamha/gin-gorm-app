@@ -7,9 +7,9 @@ import (
 // User : Table name is `users`
 type User struct {
 	gorm.Model
-	Username string `gorm:"unique_index" form:"username" json:"username" binding:"required"`
-	Email    string `gorm:"unique_index" form:"email" json:"email" binding:"required"`
-	Password string `gorm:"not null" form:"password" json:"password" binding:"required"`
+	Username string `gorm:"unique_index"`
+	Email    string `gorm:"unique_index"`
+	Password string `gorm:"not null"`
 	Salt     string `gorm:"not null"`
 }
 
