@@ -14,7 +14,7 @@ import (
 var db *gorm.DB
 
 // ConnectDatabase : connect to database PostgreSQL using gorm
-// gorm : GO - ORM
+// gorm (GO ORM for SQL): http://gorm.io/docs/connecting_to_the_database.html
 func ConnectDatabase() {
 
 	dbHost := utils.DefaultGetEnv("DB_HOST", "localhost")
@@ -48,18 +48,7 @@ func setUpDBConnection(DB *gorm.DB) {
 	db = DB
 }
 
-// Get tables list from Models declaration
-var tables = models.DBTables
-
-// AutoMigrationDB : migrate your schema, to keep your schema update to date.
-// Document at http://gorm.io/docs/migration.html
-// Only used in scripts/migrateDB.go
-func AutoMigrationDB() {
-	// Drop tables
-	db.DropTableIfExists(tables...)
-	// Migration
-	db.AutoMigrate(tables...)
-
-	// Add Foreign Keys
-	db.Model(&models.Profile{}).AddForeignKey("user_id", "users(id)", "SET NULL", "SET NULL")
+// GetDBConnection : get db connection from package config
+func GetDBConnection() *gorm.DB {
+	return db
 }
