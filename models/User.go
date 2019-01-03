@@ -4,24 +4,24 @@ import (
 	"errors"
 
 	"github.com/huynhsamha/gin-gorm-app/utils"
-	"github.com/jinzhu/gorm"
 )
 
 // User : Table name is `users`
 type User struct {
-	gorm.Model
-	Username string `gorm:"unique_index"`
-	Email    string `gorm:"unique_index"`
-	Password string `gorm:"not null" json:"-"` // json: "-", ignored in responses
-	Salt     string `gorm:"not null" json:"-"`
+	CustomBasicModel
 
-	Name     string
-	Location string
-	Title    string
-	AboutMe  string
-	Website  string
-	Github   string
-	Twitter  string
+	Username string `gorm:"unique_index" json:"username"`
+	Email    string `gorm:"unique_index" json:"email"`
+	Password string `gorm:"not null" json:"-"` // json: "-", ignored in responses
+	Salt     string `gorm:"not null" json:"-"` // json: "-", ignored in responses
+
+	Name     string `json:"name"`
+	Location string `json:"location"`
+	Title    string `json:"title"`
+	AboutMe  string `json:"aboutMe"`
+	Website  string `json:"website"`
+	Github   string `json:"github"`
+	Twitter  string `json:"twitter"`
 }
 
 var random = utils.Random{}

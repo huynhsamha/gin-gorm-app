@@ -10,3 +10,11 @@ func DefaultGetEnv(key, defaultVal string) string {
 	}
 	return val
 }
+
+// DefaultStringEmpty : get default string if value is empty
+func DefaultStringEmpty(value string, defaultVal string) string {
+	if value == "" {
+		value = defaultVal
+	}
+	return value
+}

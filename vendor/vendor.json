@@ -107,6 +107,12 @@
 			"revisionTime": "2018-07-18T01:23:57Z"
 		},
 		{
+			"checksumSHA1": "NiXAofVSzScnLrFLjsPKc2haigQ=",
+			"path": "github.com/thoas/go-funk",
+			"revision": "fbae87fb5b5cdb35c9682d11c420061cf41268a9",
+			"revisionTime": "2018-10-20T16:45:46Z"
+		},
+		{
 			"checksumSHA1": "j/aP/n+qaMNBUou/a2m2LDJ5q3Q=",
 			"path": "github.com/ugorji/go/codec",
 			"revision": "772ced7fd4c2f6322c07537a9a93b68d74551fa6",

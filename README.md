@@ -25,6 +25,8 @@ Implement *Server Side Render (SSR)* and *REST APIs* using **gin** *HTTP Web Fra
 
 #### mapstructure
 
+#### go-funk
+
 ## Quickstart
 
 ### Set Up Database

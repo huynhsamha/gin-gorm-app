@@ -1,8 +1,20 @@
 package models
 
-import "github.com/jinzhu/gorm"
+import (
+	"time"
+
+	"github.com/jinzhu/gorm"
+)
 
 var db *gorm.DB
+
+// CustomBasicModel : customize gorm.Model
+type CustomBasicModel struct {
+	ID        uint       `gorm:"primary_key" json:"id"`
+	CreatedAt time.Time  `json:"createdAt"`
+	UpdatedAt time.Time  `json:"updatedAt"`
+	DeletedAt *time.Time `sql:"index" json:"deletedAt"`
+}
 
 // SetUpDBConnection : used to assign `db` connection
 // after connection is established on start server
