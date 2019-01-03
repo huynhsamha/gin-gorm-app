@@ -11,5 +11,8 @@ var authCtrl = Controllers.AuthCtrl{}
 func setUpAuthRoutes(router *gin.RouterGroup) {
 	router.POST("/signup", authCtrl.SignUp)
 	router.POST("/login", authCtrl.Login)
-	router.POST("/refreshToken", authCtrl.RefreshToken)
+
+	authorized := router.Group("/x", authCtrl.Authorized)
+	authorized.GET("/authorized", authCtrl.CheckAuthorized)
+	authorized.GET("/refreshToken", authCtrl.RefreshToken)
 }

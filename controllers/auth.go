@@ -5,6 +5,7 @@ import (
 
 	"github.com/huynhsamha/gin-gorm-app/models"
 	"github.com/huynhsamha/gin-gorm-app/utils"
+	"github.com/mitchellh/mapstructure"
 
 	"github.com/gin-gonic/gin"
 )
@@ -54,8 +55,8 @@ type formLogin struct {
 }
 
 type jwtUserData struct {
-	UserID   uint
-	Username string
+	UserID   uint   `json:"userID"`
+	Username string `json:"username"`
 }
 
 // Login : return jwt (token, iat, nbf, exp, user)
@@ -96,6 +97,41 @@ func (AuthCtrl) Login(ctx *gin.Context) {
 		"nbf":   claims.NotBefore,
 		"exp":   claims.ExpiresAt,
 	})
+}
+
+// Authorized : middleware for user loged in
+func (AuthCtrl) Authorized(ctx *gin.Context) {
+	token := ctx.GetHeader("Authorization")
+	payload, err := jwt.ParseToken(token)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	// store payload (jwtUserData type) to this context
+	ctx.Set("payload", payload) // e.g. map[userID:3 username:alice]
+	ctx.Next()
+}
+
+// getPayload : get `payload` in this context, only used after middleware Authorized()
+func (AuthCtrl) getPayload(ctx *gin.Context) (userData jwtUserData, exists bool) {
+	payload, ok := ctx.Get("payload") // e.g. map[userID:3 username:alice]
+	if !ok {
+		return jwtUserData{}, false
+	}
+	mapPayload := payload.(map[string]interface{})
+	result := jwtUserData{}
+	mapstructure.Decode(mapPayload, &result) // decode map to struct
+	return result, true
+}
+
+// CheckAuthorized : check if user loged in, response jwtUserData
+func (ctrl AuthCtrl) CheckAuthorized(ctx *gin.Context) {
+	payload, ok := ctrl.getPayload(ctx)
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Request is not authorized"})
+		return
+	}
+	ctx.JSON(http.StatusOK, payload)
 }
 
 // RefreshToken :

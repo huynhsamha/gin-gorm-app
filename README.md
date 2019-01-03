@@ -23,6 +23,8 @@ Implement *Server Side Render (SSR)* and *REST APIs* using **gin** *HTTP Web Fra
 
 #### jwt-go
 
+#### mapstructure
+
 ## Quickstart
 
 ### Set Up Database
