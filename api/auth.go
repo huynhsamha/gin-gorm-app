@@ -15,4 +15,5 @@ func setUpAuthRoutes(router *gin.RouterGroup) {
 	authorized := router.Group("/x", authCtrl.Authorized)
 	authorized.GET("/authorized", authCtrl.CheckAuthorized)
 	authorized.GET("/refreshToken", authCtrl.RefreshToken)
+	authorized.POST("/changePassword", authCtrl.ChangePassword)
 }

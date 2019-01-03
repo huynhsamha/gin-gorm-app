@@ -152,3 +152,32 @@ func (ctrl AuthCtrl) RefreshToken(ctx *gin.Context) {
 		"exp":   claims.ExpiresAt,
 	})
 }
+
+// ChangePassword : refresh access token
+func (ctrl AuthCtrl) ChangePassword(ctx *gin.Context) {
+	payload, _ := ctrl.getPayload(ctx)
+
+	oldPassword := ctx.PostForm("oldPassword")
+	newPassword := ctx.PostForm("newPassword")
+	if oldPassword == "" || newPassword == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Passwords are required."})
+		return
+	}
+
+	user := models.User{}
+	db.First(&user, payload.UserID) // retrieve user in database by UserID
+
+	if err := user.ChangePassword(oldPassword, newPassword); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	db.Model(&user).Updates(models.User{
+		Salt:     user.Salt,
+		Password: user.Password,
+	})
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "Change password successfully.",
+	})
+}
