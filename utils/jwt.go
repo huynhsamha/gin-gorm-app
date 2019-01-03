@@ -19,11 +19,11 @@ type JWTCustomClaims struct {
 type JWT struct{}
 
 // GenerateToken : JWT method
-func (JWT) GenerateToken(data interface{}) (string, error) {
+func (JWT) GenerateToken(data interface{}) (string, JWTCustomClaims, error) {
 	claims := JWTCustomClaims{
 		StandardClaims: jwt.StandardClaims{
 			IssuedAt:  time.Now().Unix(),
-			ExpiresAt: time.Now().Add(7 * time.Second).Unix(),        // only valid in 5s after valid
+			ExpiresAt: time.Now().Add(5 * time.Hour).Unix(),          // only valid in 5 hours
 			NotBefore: time.Now().Add(100 * time.Millisecond).Unix(), // just valid after 100ms
 		},
 		Payload: data,
@@ -34,7 +34,7 @@ func (JWT) GenerateToken(data interface{}) (string, error) {
 	// Sign and get the complete encoded token as a string using the secret
 	tokenString, err := token.SignedString(jwtSecret)
 
-	return tokenString, err
+	return tokenString, claims, err
 }
 
 // ParseToken : JWT method
