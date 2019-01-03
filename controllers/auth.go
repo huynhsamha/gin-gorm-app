@@ -118,7 +118,7 @@ func (AuthCtrl) getPayload(ctx *gin.Context) (userData jwtUserData, exists bool)
 	if !ok {
 		return jwtUserData{}, false
 	}
-	mapPayload := payload.(map[string]interface{})
+	mapPayload := payload.(map[string]interface{}) // type assert from interface{}
 	result := jwtUserData{}
 	mapstructure.Decode(mapPayload, &result) // decode map to struct
 	return result, true
@@ -128,22 +128,27 @@ func (AuthCtrl) getPayload(ctx *gin.Context) (userData jwtUserData, exists bool)
 func (ctrl AuthCtrl) CheckAuthorized(ctx *gin.Context) {
 	payload, ok := ctrl.getPayload(ctx)
 	if !ok {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Request is not authorized"})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Request is unauthorized"})
 		return
 	}
 	ctx.JSON(http.StatusOK, payload)
 }
 
-// RefreshToken :
-func (AuthCtrl) RefreshToken(ctx *gin.Context) {
-	token := ctx.PostForm("token")
-	payload, err := jwt.ParseToken(token)
+// RefreshToken : refresh access token
+func (ctrl AuthCtrl) RefreshToken(ctx *gin.Context) {
+	payload, _ := ctrl.getPayload(ctx)
+
+	token, claims, err := jwt.GenerateToken(payload)
+
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"token": payload,
+		"token": token,
+		"iat":   claims.IssuedAt,
+		"nbf":   claims.NotBefore,
+		"exp":   claims.ExpiresAt,
 	})
 }
