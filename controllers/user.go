@@ -99,20 +99,26 @@ func (ctrl UserCtrl) FindAll(ctx *gin.Context) {
 	})
 }
 
-// FindOneByID :
+// FindOneByID : Find user by ID
 func (ctrl UserCtrl) FindOneByID(ctx *gin.Context) {
 	id := ctx.Param("id")
-	ctx.JSON(http.StatusOK, gin.H{
-		"id":      id,
-		"message": "Received",
-	})
+	user := models.User{}
+	res := db.First(&user, id)
+	if res.RowsAffected == 0 {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+	ctx.JSON(http.StatusOK, user)
 }
 
-// FindOneByUsername :
+// FindOneByUsername : Find user by Username
 func (ctrl UserCtrl) FindOneByUsername(ctx *gin.Context) {
 	username := ctx.Param("username")
-	ctx.JSON(http.StatusOK, gin.H{
-		"username": username,
-		"message":  "Received",
-	})
+	user := models.User{}
+	res := db.Where(&models.User{Username: username}).First(&user)
+	if res.RowsAffected == 0 {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+	ctx.JSON(http.StatusOK, user)
 }
