@@ -49,6 +49,10 @@ func (JWT) ParseToken(tokenString string) (interface{}, error) {
 		return jwtSecret, nil
 	})
 
+	if err != nil {
+		return nil, err
+	}
+
 	if claims, ok := token.Claims.(*JWTCustomClaims); ok && token.Valid {
 		return claims.Payload, nil
 	}

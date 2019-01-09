@@ -17,12 +17,12 @@ type FakeDBCtrl struct{}
 func (FakeDBCtrl) AuthRequired(ctx *gin.Context) {
 	keyFakeDB, exist := utils.RequireGetEnv("KEY_FAKE_DB")
 	if !exist {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "API is not supported"})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "API is not supported"})
 		return
 	}
 
-	if ctx.GetHeader("Authorizarion") != keyFakeDB {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Key authorization is not correct"})
+	if ctx.GetHeader("Authorization") != keyFakeDB {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Key authorization is not correct"})
 		return
 	}
 

@@ -1,5 +1,6 @@
 const Faker = require('fakerator');
 const fs = require('fs');
+const path = require('path');
 
 const fakeUser = (fake) => {
     const first_name = fake.names.firstName();
@@ -30,4 +31,4 @@ for (let i=0;i<50;i++) {
     users.push(fakeUser(Faker(randLocale())));
 }
 
-fs.writeFileSync('./db.json', JSON.stringify(users, null, 4))
+fs.writeFileSync(path.join(__dirname, './users.json'), JSON.stringify(users, null, 4))

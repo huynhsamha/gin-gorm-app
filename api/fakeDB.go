@@ -10,6 +10,6 @@ var fakeDBCtrl = Controllers.FakeDBCtrl{}
 
 func setUpFakeDBRoutes(router *gin.RouterGroup) {
 
-	authorized := router.Group("/", fakeDBCtrl.AuthRequired)
-	authorized.POST("/users", fakeDBCtrl.FakeUsers)
+	router.Use(fakeDBCtrl.AuthRequired)
+	router.POST("/users", fakeDBCtrl.FakeUsers)
 }

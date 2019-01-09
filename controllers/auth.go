@@ -104,13 +104,12 @@ func (AuthCtrl) Login(ctx *gin.Context) {
 func (AuthCtrl) Authorized(ctx *gin.Context) {
 	token := ctx.GetHeader("Authorization")
 	if token == "" {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Request is unauthorized"})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Require authorization"})
 		return
 	}
-
 	payload, err := jwt.ParseToken(token)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	// store payload (jwtUserData type) to this context

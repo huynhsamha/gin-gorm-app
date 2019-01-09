@@ -32,6 +32,23 @@ Implement *Server Side Render (SSR)* and *REST APIs* using **gin** *HTTP Web Fra
 ### Set Up Database
 
 ### Scripts
+```bash
+### Drop database + Sync database tables
+./migrate.sh
+
+
+### Generate database
+
+## Go to scripts/db
+npm install # or yarn
+
+## Generate users in file `users.json` to your database
+./start # start server
+node scripts/db/users.js # call API to fake users
+
+## To create new users database, run this file to create new users list in file `users.json`
+node scripts/db/users-fake.js
+```
 
 ### Run development
 
