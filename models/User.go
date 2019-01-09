@@ -22,6 +22,7 @@ type User struct {
 	Website  string `json:"website"`
 	Github   string `json:"github"`
 	Twitter  string `json:"twitter"`
+	PhotoURL string `json:"photoUrl"`
 }
 
 var random = utils.Random{}

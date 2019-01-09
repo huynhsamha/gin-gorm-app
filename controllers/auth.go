@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/huynhsamha/gin-gorm-app/models"
@@ -102,6 +103,11 @@ func (AuthCtrl) Login(ctx *gin.Context) {
 // Authorized : middleware for user loged in
 func (AuthCtrl) Authorized(ctx *gin.Context) {
 	token := ctx.GetHeader("Authorization")
+	if token == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Request is unauthorized"})
+		return
+	}
+
 	payload, err := jwt.ParseToken(token)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -115,6 +121,7 @@ func (AuthCtrl) Authorized(ctx *gin.Context) {
 // getPayload : get `payload` in this context, only used after middleware Authorized()
 func (AuthCtrl) getPayload(ctx *gin.Context) (userData jwtUserData, exists bool) {
 	payload, ok := ctx.Get("payload") // e.g. map[userID:3 username:alice]
+	fmt.Println(payload, ok)
 	if !ok {
 		return jwtUserData{}, false
 	}

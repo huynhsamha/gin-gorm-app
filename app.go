@@ -60,5 +60,5 @@ func main() {
 
 	configApp()
 
-	app.Run(":" + utils.DefaultGetEnv("PORT", "3000"))
+	app.Run(":" + utils.DefaultGetEnv("PORT", "8001"))
 }
