@@ -122,3 +122,47 @@ func (ctrl UserCtrl) FindOneByUsername(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, user)
 }
+
+type formUpdateProfile struct {
+	Name     string `form:"name" json:"name"`
+	Location string `form:"location" json:"location"`
+	Title    string `form:"title" json:"title"`
+	AboutMe  string `form:"aboutMe" json:"aboutMe"`
+	Website  string `form:"website" json:"website"`
+	Github   string `form:"github" json:"github"`
+	Twitter  string `form:"twitter" json:"twitter"`
+	PhotoURL string `form:"photoUrl" json:"photoUrl"`
+}
+
+// UpdateProfile : update my profile
+func (ctrl UserCtrl) UpdateProfile(ctx *gin.Context) {
+	payload, _ := AuthCtrl{}.getPayload(ctx)
+
+	var form formUpdateProfile
+	if err := ctx.ShouldBind(&form); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	res := db.Model(&models.User{}).
+		Where("id = ?", payload.UserID).
+		Updates(models.User{
+			Name:     form.Name,
+			Location: form.Location,
+			Title:    form.Title,
+			AboutMe:  form.AboutMe,
+			Website:  form.Website,
+			Github:   form.Github,
+			Twitter:  form.Twitter,
+			PhotoURL: form.PhotoURL,
+		})
+
+	if res.Error != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": res.Error.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "Update profile successfully",
+	})
+}

@@ -12,4 +12,7 @@ func setUpUserRoutes(router *gin.RouterGroup) {
 	router.GET("/", userCtrl.FindAll)
 	router.GET("/n/:username", userCtrl.FindOneByUsername)
 	router.GET("/d/:id", userCtrl.FindOneByID)
+
+	authorized := router.Group("/x", authCtrl.Authorized)
+	authorized.POST("/updateProfile", userCtrl.UpdateProfile)
 }

@@ -27,3 +27,10 @@ func DefaultStringEmpty(value string, defaultVal string) string {
 	}
 	return value
 }
+
+// SetIfNotEmpty : set target = value if value is not empty
+func SetIfNotEmpty(target *string, value string) {
+	if value != "" {
+		*target = value
+	}
+}
