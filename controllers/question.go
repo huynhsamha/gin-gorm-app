@@ -108,6 +108,7 @@ func (ctrl QuestionCtrl) FindOneByID(ctx *gin.Context) {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": "Question not found"})
 		return
 	}
+	db.Model(&question).Related(&question.Owner, "OwnerID")
 	ctx.JSON(http.StatusOK, question)
 }
 
