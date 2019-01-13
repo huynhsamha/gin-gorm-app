@@ -15,5 +15,5 @@ func setUpUserRoutes(router *gin.RouterGroup) {
 
 	authorized := router.Group("/x", authCtrl.Authorized)
 	authorized.POST("/updateProfile", userCtrl.UpdateProfile)
-	authorized.POST("/uploadAvatar", userCtrl.UploadAvatar)
+	authorized.POST("/uploadAvatar", userCtrl.UploadAvatar, userCtrl.UpdateAvatar)
 }

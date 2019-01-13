@@ -171,13 +171,13 @@ func (ctrl UserCtrl) UpdateProfile(ctx *gin.Context) {
 	})
 }
 
-// UploadAvatar : upload avatar
+// UploadAvatar : upload avatar to directory
 func (ctrl UserCtrl) UploadAvatar(ctx *gin.Context) {
 	payload, _ := AuthCtrl{}.getPayload(ctx)
 
 	file, err := ctx.FormFile("avatar")
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -202,7 +202,7 @@ func (ctrl UserCtrl) UploadAvatar(ctx *gin.Context) {
 
 	contentType := string(file.Header.Get("Content-Type"))
 	if match, err := regexp.MatchString("^image/(png|jpe?g|bmp)$", contentType); !match {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Only upload image with type png, jpeg, jpg and bmp", "Error": err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Only upload image with type png, jpeg, jpg and bmp", "Error": err.Error()})
 		return
 	}
 
@@ -214,9 +214,30 @@ func (ctrl UserCtrl) UploadAvatar(ctx *gin.Context) {
 	os.Mkdir(dirname, 0755)
 
 	if err := ctx.SaveUploadedFile(file, dest); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error on upload file.", "Error": err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Error on upload file.", "Error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, file)
+	ctx.Set("photoUrl", dest) // set url of avatar
+	ctx.Next()
+}
+
+// UpdateAvatar : update avatar url to database
+func (ctrl UserCtrl) UpdateAvatar(ctx *gin.Context) {
+	payload, _ := AuthCtrl{}.getPayload(ctx)
+	photoURL := ctx.GetString("photoUrl") // get url to update to database
+
+	res := db.Model(&models.User{}).
+		Where("id = ?", payload.UserID).
+		Updates(models.User{PhotoURL: photoURL})
+
+	if res.Error != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": res.Error.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message":  "Upload avatar successfully",
+		"photoUrl": photoURL,
+	})
 }
