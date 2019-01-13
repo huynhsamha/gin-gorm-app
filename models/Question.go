@@ -10,7 +10,7 @@ type Question struct {
 	Owner   User `gorm:"foreignkey:OwnerID"`
 	OwnerID uint `json:"ownerID"`
 
-	Votes uint `json:"votes"`
+	Votes uint `gorm:"default:0" json:"votes"`
 
 	AcceptedAnswerID uint     `json:"acceptedAnswerID"`
 	Answers          []Answer `gorm:"foreignkey:QuestionID;association_foreignkey:ID"`

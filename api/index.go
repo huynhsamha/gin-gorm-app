@@ -13,4 +13,5 @@ func SetUp(router *gin.RouterGroup) {
 	// Production API routes
 	setUpAuthRoutes(router.Group("/auth"))
 	setUpUserRoutes(router.Group("/users"))
+	setUpQuestionRoutes(router.Group("/questions"))
 }

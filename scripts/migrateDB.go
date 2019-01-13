@@ -32,6 +32,11 @@ func autoMigrationDB() {
 	// Get DB connnection
 	db := config.GetDBConnection()
 
+	// Remove foreign keys
+	db.Model(&models.Answer{}).RemoveForeignKey("question_id", "questions(id)")
+	db.Model(&models.Answer{}).RemoveForeignKey("owner_id", "users(id)")
+	db.Model(&models.Question{}).RemoveForeignKey("owner_id", "users(id)")
+
 	// Drop tables
 	fmt.Println("Dropping tables...")
 	db.DropTableIfExists(tables...)
