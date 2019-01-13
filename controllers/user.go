@@ -201,8 +201,8 @@ func (ctrl UserCtrl) UploadAvatar(ctx *gin.Context) {
 	}
 
 	contentType := string(file.Header.Get("Content-Type"))
-	if match, err := regexp.MatchString("^image/(png|jpe?g|bmp)$", contentType); !match {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Only upload image with type png, jpeg, jpg and bmp", "Error": err.Error()})
+	if match, _ := regexp.MatchString("^image/(png|jpe?g|bmp)$", contentType); !match {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Only upload image with type png, jpeg, jpg and bmp"})
 		return
 	}
 
