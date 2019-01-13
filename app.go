@@ -21,6 +21,7 @@ func configApp() {
 	 * Serve static files
 	 */
 	app.Static("/public", "./public")
+	app.Static("/uploads", "./uploads")
 
 	/**
 	 * Set up view engine
