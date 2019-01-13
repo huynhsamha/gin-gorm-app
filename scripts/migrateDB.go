@@ -42,7 +42,9 @@ func autoMigrationDB() {
 
 	// Add Foreign Keys
 	fmt.Println("Add foreign keys...")
-	// db.Model(&models.Profile{}).AddForeignKey("user_id", "users(id)", "SET NULL", "SET NULL")
+	db.Model(&models.Question{}).AddForeignKey("owner_id", "users(id)", "SET NULL", "SET NULL")
+	db.Model(&models.Answer{}).AddForeignKey("owner_id", "users(id)", "SET NULL", "SET NULL")
+	db.Model(&models.Answer{}).AddForeignKey("question_id", "questions(id)", "SET NULL", "SET NULL")
 
 	fmt.Println("Migration is successfully")
 }

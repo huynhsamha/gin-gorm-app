@@ -26,5 +26,7 @@ func SetUpDBConnection(conn *gorm.DB) {
 // Please order tables to able to delete tables when drop
 // Used in migration database
 var DBTables = []interface{}{
+	&Question{},
+	&Answer{},
 	&User{},
 }
