@@ -1,3 +1,5 @@
+🛑[DEPRECATED] 🛑 I don't have any time more to continue developping this project
+
 # Gin Gorm App
 
 Go HTTP web backend using GIN and GORM (Golang ORM for SQL). 
